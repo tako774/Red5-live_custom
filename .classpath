@@ -3,10 +3,7 @@
 	<classpathentry kind="src" path="WEB-INF/src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.7"/>
 	<classpathentry kind="lib" path="C:/Program Files (x86)/Red5/red5-server.jar"/>
-	<classpathentry kind="lib" path="C:/Program Files (x86)/Red5/lib/logback-core-1.0.13.jar"/>
-	<classpathentry kind="lib" path="C:/Program Files (x86)/Red5/lib/log4j-over-slf4j-1.7.5.jar"/>
-	<classpathentry kind="lib" path="C:/Program Files (x86)/Red5/lib/slf4j-api-1.7.5.jar"/>
 	<classpathentry kind="lib" path="C:/Program Files (x86)/Red5/lib/spring-core-4.0.3.RELEASE.jar"/>
-	<classpathentry kind="lib" path="C:/Program Files (x86)/Red5/red5-service.jar"/>
+	<classpathentry kind="lib" path="C:/Program Files (x86)/Red5/lib/slf4j-api-1.7.5.jar"/>
 	<classpathentry kind="output" path="WEB-INF/classes"/>
 </classpath>
