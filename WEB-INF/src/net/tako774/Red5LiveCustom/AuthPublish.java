@@ -11,29 +11,36 @@ import org.red5.server.api.stream.IStreamPublishSecurity;
 
 public class AuthPublish implements IStreamPublishSecurity {
 
-	private List<String> allowHosts = null;
-	AuthPublish(List<String> allowHosts) {
-		this.allowHosts = allowHosts;
-	}
+  private List<String> allowHosts = null;
 
-	@Override
-	public boolean isPublishAllowed(IScope scope, String name, String mode) {
-		if (allowHosts.contains("*")) {	return true; }
+  AuthPublish(List<String> allowHosts) {
+    this.allowHosts = allowHosts;
+  }
 
-		IConnection conn = Red5.getConnectionLocal();
+  @Override
+  public boolean isPublishAllowed(IScope scope, String name, String mode) {
+    if (allowHosts.contains("*")) {
+      return true;
+    }
 
-		String address = conn.getRemoteAddress();
-		if (allowHosts.contains(address)) { return true; }
+    IConnection conn = Red5.getConnectionLocal();
 
-		try {
-			String hostname = InetAddress.getByName(address).getHostName();
-			if (allowHosts.contains(hostname)) { return true; }
-		} catch (UnknownHostException e) {
-			// do nothing
-		}
+    String address = conn.getRemoteAddress();
+    if (allowHosts.contains(address)) {
+      return true;
+    }
 
-		Red5.getConnectionLocal().close();
-		return false;
-	}
+    try {
+      String hostname = InetAddress.getByName(address).getHostName();
+      if (allowHosts.contains(hostname)) {
+        return true;
+      }
+    } catch (UnknownHostException e) {
+      // do nothing
+    }
+
+    Red5.getConnectionLocal().close();
+    return false;
+  }
 
 }
