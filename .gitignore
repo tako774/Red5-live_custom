@@ -1,0 +1,20 @@
+# Eclipse
+*.pydevproject
+.metadata
+.gradle
+*.tmp
+*.bak
+*.swp
+*~.nib
+local.properties
+.settings/
+.loadpath
+
+# java class
+*.class
+
+# Package Files #
+*.jar
+*.war
+*.ear
+
