@@ -12,6 +12,7 @@ local.properties
 
 # java class
 *.class
+WEB-INF/classes
 
 # Package Files #
 *.jar
