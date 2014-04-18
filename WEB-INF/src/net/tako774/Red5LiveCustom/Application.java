@@ -12,12 +12,13 @@ import org.red5.server.api.scope.IScope;
 
 public class Application extends ApplicationAdapter {
 
-  private Properties conf = new Properties();
   private int maxConnections = 5;
   private List<String> allowPublishHosts;
 
   private void _loadProperty() {
+    Properties conf = new Properties();
     InputStream inputStream = null;
+
     try {
       inputStream = Application.class.getClassLoader().getResourceAsStream("application.properties");
       conf.load(inputStream);
@@ -44,6 +45,7 @@ public class Application extends ApplicationAdapter {
         }
       }
     }
+
   }
 
   @Override
