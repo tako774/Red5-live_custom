@@ -2,8 +2,9 @@ package net.tako774.Red5LiveCustom;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.Arrays;
-import java.util.List;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
+import java.util.HashSet;
 import java.util.Properties;
 
 import org.red5.server.adapter.ApplicationAdapter;
@@ -13,7 +14,7 @@ import org.red5.server.api.scope.IScope;
 public class Application extends ApplicationAdapter {
 
   private int maxConnections = 5;
-  private List<String> allowPublishHosts;
+  private HashSet<String> allowPublishAddresses = new HashSet<String>();
 
   private void _loadProperty() {
     Properties conf = new Properties();
@@ -28,11 +29,19 @@ public class Application extends ApplicationAdapter {
         maxConnections = _maxConnections;
       }
 
-      String[] _allowPublishHostStrs = conf.getProperty("allowPublishHosts").split(",");
-      for (int i = 0; i < _allowPublishHostStrs.length; i++) {
-        _allowPublishHostStrs[i] = _allowPublishHostStrs[i].trim();
+      for (String host: conf.getProperty("allowPublishHosts").split(",")) {
+        host = host.trim();
+        if (host.equals("*")) {
+          allowPublishAddresses.add(host);
+        }
+        else {
+          try {
+            allowPublishAddresses.add(InetAddress.getByName(host).getHostAddress());
+          } catch (UnknownHostException e) {
+            log.warn("Can't resolve hostname: " + host);
+          }
+        }
       }
-      allowPublishHosts = Arrays.asList(_allowPublishHostStrs);
 
     } catch (IOException e) {
       log.warn(e.toString(), e.getStackTrace().toString());
@@ -55,9 +64,9 @@ public class Application extends ApplicationAdapter {
 
     _loadProperty();
     log.info("maxConnections: " + maxConnections);
-    log.info("allowPublishHosts: " + allowPublishHosts.toString());
+    log.info("allowPublishAddresses: " + allowPublishAddresses.toString());
 
-    registerStreamPublishSecurity(new AuthPublish(allowPublishHosts));
+    registerStreamPublishSecurity(new AuthPublish(allowPublishAddresses));
 
     return true;
   }
